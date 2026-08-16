@@ -68,6 +68,7 @@ namespace School_Manegment.Data.Repository
             }
         }
 
+
         public async Task UpdateAsync(TeacherLoginDetail loginDetail)
         {
             try
