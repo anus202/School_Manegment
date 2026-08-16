@@ -1,0 +1,19 @@
+﻿using Microsoft.EntityFrameworkCore;
+using School_Manegment.Models.Teacher_Tbl;
+
+namespace School_Manegment.Models
+{
+    public class ApplicationDbContext : DbContext
+    {
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
+        {
+        }
+
+        public DbSet<Login> Sys_Logins { get; set; }
+        public DbSet<Teacher> Teachers { get; set; }
+        public DbSet<TeacherExperience> TeacherExperiences { get; set; }
+        public DbSet<TeacherEducation> TeacherEducations { get; set; }
+        public DbSet<TeacherLoginDetail> TeacherLoginDetails { get; set; }
+
+    }
+}
