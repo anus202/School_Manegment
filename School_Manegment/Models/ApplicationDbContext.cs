@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using School_Manegment.Models.Student_tbl;
 using School_Manegment.Models.Teacher_Tbl;
 
 namespace School_Manegment.Models
@@ -14,6 +15,7 @@ namespace School_Manegment.Models
         public DbSet<TeacherExperience> TeacherExperiences { get; set; }
         public DbSet<TeacherEducation> TeacherEducations { get; set; }
         public DbSet<TeacherLoginDetail> TeacherLoginDetails { get; set; }
+        public DbSet<Student> Students { get; set; }
 
     }
 }

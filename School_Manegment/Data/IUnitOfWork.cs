@@ -10,6 +10,7 @@ namespace School_Manegment.Data
         ITeacherEducationRepository teacherEducation { get; }
         ITeacherExperienceRepository teacherExperience { get; }
         ITeacherLoginDetailRepository teacherLoginDetail { get; }
+        IStudentRepository student { get; }
         Task SaveAsync();
     }
 }

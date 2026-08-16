@@ -2,6 +2,7 @@ using Hotel_Manegment.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using School_Manegment.Data;
 using School_Manegment.Data.Interface;
 using School_Manegment.Data.Repository;
@@ -11,11 +12,13 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// 1. Services Register Karein
 builder.Services.AddControllers();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("Conn")));
+    options.UseSqlServer(
+        builder.Configuration.GetConnectionString("Conn")
+    ));
+
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<ILoginRepository, LoginRepository>();
@@ -23,6 +26,9 @@ builder.Services.AddScoped<ITeacherRepository, TeacherRepository>();
 builder.Services.AddScoped<ITeacherEducationRepository, TeacherEducationRepository>();
 builder.Services.AddScoped<ITeacherExperienceRepository, TeacherExperienceRepository>();
 builder.Services.AddScoped<ITeacherLoginDetailRepository, TeacherLoginDetailRepository>();
+builder.Services.AddScoped<IStudentRepository, StudentRepository>();
+
+
 
 builder.Services.AddScoped<LoginService>();
 builder.Services.AddScoped<SetupService>();
@@ -31,15 +37,52 @@ builder.Services.AddScoped<EncryptionService>();
 builder.Services.AddScoped<TeacherService>();
 builder.Services.AddScoped<TeacherEducationSevice>();
 builder.Services.AddScoped<TeacherExperienceService>();
+builder.Services.AddScoped<StudentService>();
+
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+
+
+
+builder.Services.AddSwaggerGen(options =>
+{
+    // JWT Bearer definition
+    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Type = SecuritySchemeType.Http,
+        Scheme = "bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Description = "Enter your JWT token"
+    });
+
+
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            Array.Empty<string>()
+        }
+    });
+});
+
 
 
 builder.Services.AddAuthentication(options =>
 {
-    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultAuthenticateScheme =
+        JwtBearerDefaults.AuthenticationScheme;
+
+    options.DefaultChallengeScheme =
+        JwtBearerDefaults.AuthenticationScheme;
 })
 .AddJwtBearer(options =>
 {
@@ -49,27 +92,42 @@ builder.Services.AddAuthentication(options =>
         ValidateAudience = true,
         ValidateLifetime = true,
         ValidateIssuerSigningKey = true,
+
         ValidIssuer = builder.Configuration["Jwt:Issuer"],
+
         ValidAudience = builder.Configuration["Jwt:Audience"],
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+
+        IssuerSigningKey =
+            new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(
+                    builder.Configuration["Jwt:Key"]
+                )
+            )
     };
 
-    // Cookie se JWT Token extract karne ki logic
+
     options.Events = new JwtBearerEvents
     {
         OnMessageReceived = context =>
         {
             if (context.Request.Cookies.ContainsKey("jwtToken"))
             {
-                context.Token = context.Request.Cookies["jwtToken"];
+                context.Token =
+                    context.Request.Cookies["jwtToken"];
             }
+
             return Task.CompletedTask;
         },
+
+
         OnChallenge = context =>
         {
-            // Direct Login Page redirect jab Unauthorized Request aye (401 ke bajaye)
             context.HandleResponse();
-            context.Response.Redirect("/Autantication/Login");
+
+            context.Response.Redirect(
+                "/Autantication/Login"
+            );
+
             return Task.CompletedTask;
         }
     };
@@ -78,6 +136,7 @@ builder.Services.AddAuthentication(options =>
 
 var app = builder.Build();
 
+
 using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider
@@ -85,31 +144,38 @@ using (var scope = app.Services.CreateScope())
 
     await context.Database.MigrateAsync();
 
+
     var setupService = scope.ServiceProvider
         .GetRequiredService<SetupService>();
 
     await setupService.AddLogin();
 }
 
-
-// 2. Middleware Pipeline Configure Karein
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
+
     app.UseSwaggerUI(c =>
     {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "V1 API");
-        // Is line se localhost:port/ par direct Swagger khulega
+        c.SwaggerEndpoint(
+            "/swagger/v1/swagger.json",
+            "V1 API"
+        );
+
+        // Swagger directly opens on localhost
         c.RoutePrefix = string.Empty;
     });
 }
 
 app.UseHttpsRedirection();
+
 app.UseRouting();
+
 app.UseAuthentication();
+
 app.UseAuthorization();
 
-// 3. MVC route (MapControllerRoute) ko hata kar MapControllers use karein
+
 app.MapControllers();
 
 app.Run();

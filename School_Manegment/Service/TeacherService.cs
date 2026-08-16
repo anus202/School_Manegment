@@ -1,5 +1,6 @@
 ﻿using Hotel_Manegment.Services;
 using School_Manegment.Data;
+using School_Manegment.Models;
 using School_Manegment.Models.Teacher_Tbl;
 using static School_Manegment.Payload.ApplicationDTO;
 
@@ -48,7 +49,26 @@ namespace School_Manegment.Service
                     Payload.LoginDetail.FK_TeacherId = Payload.Teacher.Id;
                     Payload.LoginDetail.TeacherCode = Payload.Teacher.TeacherCode;
                     await _unitOfWork.teacherLoginDetail.AddAsync(Payload.LoginDetail);
+                    if (Payload.LoginDetail.IsWebLogin)
+                    {
+                        Login LPayload = new Login
+                        {
+                            Email = Payload.Teacher.Email,
+                            UserName = Payload.Teacher.FirstName + " " + Payload.Teacher.LastName,
+                            Password = Payload.Teacher.TeacherCode,
+                            Roll = 0,
+                            LastLoginTime = DateTime.Now,
+                            IsLoggedIn = false,
+                            IsActive = true,
+                            IsDeleted = false,
+                            IsTeacher = true,
+                            IsStudent = false,
+                        };
+                        await _unitOfWork.login.AddAsync(LPayload);
+                    }
                 }
+                
+
                 await _unitOfWork.SaveAsync();
 
                 res = "Teacher Added Successfully";
@@ -150,6 +170,7 @@ namespace School_Manegment.Service
                     }
                 }
 
+
                 if (payload.Experiences != null)
                 {
                     foreach (var experience in payload.Experiences)
@@ -161,6 +182,82 @@ namespace School_Manegment.Service
                     }
                 }
 
+
+                if (payload.LoginDetail != null)
+                {
+                    payload.LoginDetail.FK_TeacherId = payload.Teacher.Id;
+                    payload.LoginDetail.TeacherCode = payload.Teacher.TeacherCode;
+
+                    await _unitOfWork.teacherLoginDetail.UpdateAsync(
+                        payload.LoginDetail
+                    );
+
+
+                    if (payload.LoginDetail.IsWebLogin)
+                    {
+                        var users = await _unitOfWork.login.GetAllAsync();
+
+                        var login = users.FirstOrDefault(
+                            x => x.Email == payload.Teacher.Email
+                        );
+
+
+                        if (login != null)
+                        {
+                            login.Email = payload.Teacher.Email;
+                            login.UserName =
+                                payload.Teacher.FirstName + " " +
+                                payload.Teacher.LastName;
+
+                            login.Password = payload.Teacher.TeacherCode;
+
+                            login.IsActive = true;
+                            login.IsDeleted = false;
+
+                            await _unitOfWork.login.UpdateAsync(login);
+                        }
+                        else
+                        {
+                            Login loginPayload = new Login
+                            {
+                                Email = payload.Teacher.Email,
+                                UserName =
+                                    payload.Teacher.FirstName + " " +
+                                    payload.Teacher.LastName,
+
+                                Password = payload.Teacher.TeacherCode,
+
+                                Roll = 0,
+                                LastLoginTime = DateTime.Now,
+                                IsLoggedIn = false,
+                                IsActive = true,
+                                IsDeleted = false
+                            };
+
+                            await _unitOfWork.login.AddAsync(loginPayload);
+                        }
+                    }
+
+
+                    else
+                    {
+                        var users = await _unitOfWork.login.GetAllAsync();
+
+                        var login = users.FirstOrDefault(
+                            x => x.Email == payload.Teacher.Email
+                        );
+
+                        if (login != null)
+                        {
+                            login.IsActive = false;
+                            login.IsDeleted = true;
+
+                            await _unitOfWork.login.UpdateAsync(login);
+                        }
+                    }
+                }
+
+
                 await _unitOfWork.SaveAsync();
 
                 return "Teacher Updated Successfully";
@@ -170,7 +267,6 @@ namespace School_Manegment.Service
                 throw;
             }
         }
-
         public async Task<object> GetByIdAsyncAllTbl(int id)
         {
             try

@@ -12,5 +12,7 @@ namespace School_Manegment.Models
         public int? Roll { get; set; }
         public DateTime LastLoginTime { get; set; }
         public bool IsLoggedIn { get; set; }
+        public bool IsTeacher { get; set; }
+        public bool IsStudent { get; set; }
     }
 }
