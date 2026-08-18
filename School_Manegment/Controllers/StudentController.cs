@@ -5,12 +5,16 @@ using School_Manegment.Service;
 
 namespace School_Manegment.Controllers
 {
-    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class StudentController : Controller
     {
         private readonly StudentService _service;
+
+        public StudentController(StudentService service)
+        {
+            _service = service;
+        }
 
         [HttpGet("GetAll")]
         public async Task<JsonResult> GetAll()
@@ -30,7 +34,7 @@ namespace School_Manegment.Controllers
                 data = students
             });
         }
-
+        [AllowAnonymous]
         [HttpPost("AddAsync")]
         public async Task<JsonResult> AddAsync([FromBody] Student student)
         {

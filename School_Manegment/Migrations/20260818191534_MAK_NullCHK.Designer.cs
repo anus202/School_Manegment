@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using School_Manegment.Models;
 
@@ -11,9 +12,11 @@ using School_Manegment.Models;
 namespace School_Manegment.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260818191534_MAK_NullCHK")]
+    partial class MAK_NullCHK
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -88,11 +91,8 @@ namespace School_Manegment.Migrations
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("AdmissionDate")
+                    b.Property<DateTime?>("AdmitionDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("BForm")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("CreateBy")
                         .HasColumnType("int");
@@ -104,12 +104,6 @@ namespace School_Manegment.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("EmergencyContact")
-                        .HasColumnType("int");
-
-                    b.Property<string>("FatherName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
@@ -134,9 +128,6 @@ namespace School_Manegment.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Picture")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Religion")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("StudentId")
