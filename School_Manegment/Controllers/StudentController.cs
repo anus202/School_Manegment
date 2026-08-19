@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using School_Manegment.Models.Student_tbl;
 using School_Manegment.Service;
@@ -36,14 +37,36 @@ namespace School_Manegment.Controllers
         }
         [AllowAnonymous]
         [HttpPost("AddAsync")]
-        public async Task<JsonResult> AddAsync([FromBody] Student student)
+        public async Task<IActionResult> AddAsync([FromBody] Student student)
         {
-            var result = await _service.AddAsync(student);
-            return Json(new
+            try
             {
-                Success = "Student Added Successfully",
-                data = result
-            });
+                if (student == null)
+                {
+                    return BadRequest(new
+                    {
+                        success = false,
+                        message = "Student payload cannot be null."
+                    });
+                }
+
+                var result = await _service.AddAsync(student);
+
+                return Ok(new
+                {
+                    success = true,
+                    message = result
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    success = false,
+                    message = ex.Message,
+                    error = ex.Message
+                });
+            }
         }
 
         [HttpDelete("DeleteAsync/{id}")]

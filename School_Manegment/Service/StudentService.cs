@@ -20,16 +20,28 @@ namespace School_Manegment.Service
         {
             try
             {
-                var res = string.Empty;
+                if (student == null)
+                {
+                    return "Student payload cannot be null.";
+                }
+                var existingStudent = (await _unitOfWork.student.GetAllAsync())
+          .Any(x => x.StudentId == student.StudentId);
+
+                if (existingStudent)
+                {
+                    throw new Exception("Student ID is already assigned to another student.");
+                }
+                if (student.StudentId.Any())
+                {
+                    throw new Exception("Student ID Alredy Assign ");
+                }
 
                 await _unitOfWork.student.AddAsync(student);
                 await _unitOfWork.SaveAsync();
 
-                res = "Student Added Successfully";
-
-                return res;
+                return "Student added successfully.";
             }
-            catch (Exception ex)
+            catch
             {
                 throw;
             }

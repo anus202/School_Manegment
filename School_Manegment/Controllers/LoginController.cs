@@ -5,7 +5,6 @@ using School_Manegment.Service;
 
 namespace School_Manegment.Controllers
 {
-    [Authorize] 
     [ApiController] 
     [Route("api/[controller]")]
     public class LoginController : Controller
