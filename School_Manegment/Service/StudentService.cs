@@ -2,6 +2,7 @@
 using School_Manegment.Data;
 using School_Manegment.Models.Student_tbl;
 using School_Manegment.Models.Teacher_Tbl;
+using static School_Manegment.Payload.ApplicationDTO;
 
 namespace School_Manegment.Service
 {
@@ -16,27 +17,34 @@ namespace School_Manegment.Service
             _jwtService = jwtService;
         }
 
-        public async Task<string> AddAsync(Student student)
+        public async Task<string> AddAsync(StudentDetailsDto payload)
         {
             try
             {
-                if (student == null)
+                if (payload == null)
                 {
                     return "Student payload cannot be null.";
                 }
                 var existingStudent = (await _unitOfWork.student.GetAllAsync())
-          .Any(x => x.StudentId == student.StudentId);
+          .Any(x => x.StudentId == payload.Student.StudentId);
 
                 if (existingStudent)
                 {
                     throw new Exception("Student ID is already assigned to another student.");
                 }
-                if (student.StudentId.Any())
-                {
-                    throw new Exception("Student ID Alredy Assign ");
-                }
 
-                await _unitOfWork.student.AddAsync(student);
+                await _unitOfWork.student.AddAsync(payload.Student);
+                await _unitOfWork.SaveAsync();
+
+                var res = new StudentClass
+                {
+                    FK_StudentId = payload.Student.Id,
+                    StudentCode = payload.Student.StudentId,
+                    Class = payload.studentClass.Class,
+                    Section = payload.studentClass.Section
+                };
+
+                await _unitOfWork.studentClass.AddAsync(res);
                 await _unitOfWork.SaveAsync();
 
                 return "Student added successfully.";

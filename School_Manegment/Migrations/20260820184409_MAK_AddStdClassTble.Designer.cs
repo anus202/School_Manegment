@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using School_Manegment.Models;
 
@@ -11,9 +12,11 @@ using School_Manegment.Models;
 namespace School_Manegment.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260820184409_MAK_AddStdClassTble")]
+    partial class MAK_AddStdClassTble
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -160,9 +163,6 @@ namespace School_Manegment.Migrations
                     b.Property<DateTime?>("AdmissionDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("Age")
-                        .HasColumnType("int");
-
                     b.Property<string>("BForm")
                         .HasColumnType("nvarchar(max)");
 
@@ -178,8 +178,8 @@ namespace School_Manegment.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("FatherCNIC")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("EmergencyContact")
+                        .HasColumnType("int");
 
                     b.Property<string>("FatherName")
                         .HasColumnType("nvarchar(max)");
@@ -200,6 +200,9 @@ namespace School_Manegment.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Phone")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Picture")

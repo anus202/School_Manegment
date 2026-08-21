@@ -11,6 +11,9 @@ namespace School_Manegment.Data
         ITeacherExperienceRepository teacherExperience { get; }
         ITeacherLoginDetailRepository teacherLoginDetail { get; }
         IStudentRepository student { get; }
+        ISCH_ClassSectionRepository classSection { get; }
+        ISCH_ClassRepository sCH_class { get; }
+        IStudentClassRepository studentClass { get; }
         Task SaveAsync();
     }
 }

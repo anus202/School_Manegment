@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using School_Manegment.Models.Student_tbl;
 using School_Manegment.Service;
+using static School_Manegment.Payload.ApplicationDTO;
 
 namespace School_Manegment.Controllers
 {
@@ -37,8 +38,8 @@ namespace School_Manegment.Controllers
         }
         [AllowAnonymous]
         [HttpPost("AddAsync")]
-        public async Task<IActionResult> AddAsync([FromBody] Student student)
-        {
+        public async Task<IActionResult> AddAsync([FromBody] StudentDetailsDto student)
+            {
             try
             {
                 if (student == null)

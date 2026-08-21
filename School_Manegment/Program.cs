@@ -36,6 +36,9 @@ builder.Services.AddScoped<ITeacherEducationRepository, TeacherEducationReposito
 builder.Services.AddScoped<ITeacherExperienceRepository, TeacherExperienceRepository>();
 builder.Services.AddScoped<ITeacherLoginDetailRepository, TeacherLoginDetailRepository>();
 builder.Services.AddScoped<IStudentRepository, StudentRepository>();
+builder.Services.AddScoped<ISCH_ClassSectionRepository, SCH_ClassSectionRepository>();
+builder.Services.AddScoped<ISCH_ClassRepository, SCH_ClassRepository>();
+builder.Services.AddScoped<IStudentClassRepository, StudentClassRepository>();
 
 
 
@@ -47,6 +50,7 @@ builder.Services.AddScoped<TeacherService>();
 builder.Services.AddScoped<TeacherEducationSevice>();
 builder.Services.AddScoped<TeacherExperienceService>();
 builder.Services.AddScoped<StudentService>();
+builder.Services.AddScoped<ISCH_ClassSectionService>();
 
 
 builder.Services.AddEndpointsApiExplorer();

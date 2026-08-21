@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using School_Manegment.Models;
 
@@ -11,9 +12,11 @@ using School_Manegment.Models;
 namespace School_Manegment.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260820134427_MAK_ClassisAndSection")]
+    partial class MAK_ClassisAndSection
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -160,9 +163,6 @@ namespace School_Manegment.Migrations
                     b.Property<DateTime?>("AdmissionDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("Age")
-                        .HasColumnType("int");
-
                     b.Property<string>("BForm")
                         .HasColumnType("nvarchar(max)");
 
@@ -178,8 +178,8 @@ namespace School_Manegment.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("FatherCNIC")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("EmergencyContact")
+                        .HasColumnType("int");
 
                     b.Property<string>("FatherName")
                         .HasColumnType("nvarchar(max)");
@@ -200,6 +200,9 @@ namespace School_Manegment.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Phone")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Picture")
@@ -226,49 +229,6 @@ namespace School_Manegment.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Students");
-                });
-
-            modelBuilder.Entity("School_Manegment.Models.Student_tbl.StudentClass", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Class")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("CreateBy")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreateDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("FK_StudentId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Section")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("StudentCode")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("UpdateBy")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("UpdateDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("StudentClasses");
                 });
 
             modelBuilder.Entity("School_Manegment.Models.Teacher_Tbl.Teacher", b =>

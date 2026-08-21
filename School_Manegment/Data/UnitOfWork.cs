@@ -13,6 +13,10 @@ namespace School_Manegment.Data
         public ITeacherExperienceRepository teacherExperience { get; }
         public ITeacherLoginDetailRepository teacherLoginDetail { get; }
         public IStudentRepository student { get; }
+        public ISCH_ClassSectionRepository classSection { get; }
+        public ISCH_ClassRepository sCH_class { get; }
+        public IStudentClassRepository studentClass { get; }
+
 
 
 
@@ -22,7 +26,10 @@ namespace School_Manegment.Data
             ITeacherEducationRepository teacherEducationRepository,
             ITeacherExperienceRepository teacherExperienceRepository,
             ITeacherLoginDetailRepository teacherLoginDetailRepository,
-            IStudentRepository studentRepository
+            IStudentRepository studentRepository,
+            ISCH_ClassSectionRepository classSectionRepository,
+            ISCH_ClassRepository sCH_classRepository,
+            IStudentClassRepository studentClassRepository
             )
         {
             _context = context;
@@ -32,6 +39,9 @@ namespace School_Manegment.Data
             teacherExperience = teacherExperienceRepository;
             teacherLoginDetail = teacherLoginDetailRepository;
             student = studentRepository;
+            classSection = classSectionRepository;
+            sCH_class = sCH_classRepository;
+            studentClass = studentClassRepository;
         }
 
         public async Task SaveAsync()

@@ -14,11 +14,11 @@ namespace School_Manegment.Models.Student_tbl
         public string? PrentNumber{ get; set; }
         public string? Gender { get; set; }
         public string? Religion { get; set; }
-        public int? EmergencyContact { get; set; }
+        public int? Age { get; set; }
         public string? BForm { get; set; }
         public DateTime? DateOfBirth { get; set; }
         public string? Email { get; set; }
-        public string? Phone { get; set; }
+        public string? FatherCNIC { get; set; }
         public string? WhatappNumber { get; set; }
         public string? Address { get; set; }
         public string? Picture { get; set; }

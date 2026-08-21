@@ -1,4 +1,5 @@
-﻿using School_Manegment.Models.Teacher_Tbl;
+﻿using School_Manegment.Models.Student_tbl;
+using School_Manegment.Models.Teacher_Tbl;
 
 namespace School_Manegment.Payload
 {
@@ -19,6 +20,13 @@ namespace School_Manegment.Payload
             public List<TeacherEducation> Educations { get; set; }
 
             public List<TeacherExperience> Experiences { get; set; }
+        }
+
+
+        public class StudentDetailsDto
+        {
+            public Student Student { get; set; }
+            public StudentClass studentClass { get; set; }
         }
     }
 }
