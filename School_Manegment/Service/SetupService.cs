@@ -50,6 +50,25 @@ namespace Hotel_Manegment.Services
                 await _context.SCH_Classes.AddRangeAsync(classes);
                 await _context.SaveChangesAsync();
             }
+            var existCSubject = await _context.Subjects.AnyAsync();
+
+            if (!existCSubject)
+            {
+                var subjects = new List<Subject>
+                {
+                    new Subject { SubjectName = "English" },
+                    new Subject { SubjectName = "Urdu" },
+                    new Subject { SubjectName = "Mathematics" },
+                    new Subject { SubjectName = "Science" },
+                    new Subject { SubjectName = "Islamiyat" },
+                    new Subject { SubjectName = "Computer" },
+                    new Subject { SubjectName = "Social Studies" },
+                    new Subject { SubjectName = "Drawing" }
+                };
+
+                await _context.Subjects.AddRangeAsync(subjects);
+                await _context.SaveChangesAsync();
+            }
             var existSection = await _context.SCH_ClassSections.AnyAsync();
 
             if (!existSection)
@@ -63,6 +82,22 @@ namespace Hotel_Manegment.Services
                 };
 
                 await _context.SCH_ClassSections.AddRangeAsync(sections);
+                await _context.SaveChangesAsync();
+            }
+            var existDetails = await _context.Sys_Details.AnyAsync();
+
+            if (!existDetails)
+            {
+                var details = new Sys_Detail
+                {
+                    School = "Anas School",
+                    Email = "anus@gmail.com",
+                    Password = "03101224082",
+                    Logo = "logo.png"
+
+                };
+
+                await _context.Sys_Details.AddRangeAsync(details);
                 await _context.SaveChangesAsync();
             }
 

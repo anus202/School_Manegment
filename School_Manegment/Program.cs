@@ -16,7 +16,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowFrontend",
         policy =>
         {
-            policy.WithOrigins("http://localhost:3000") // Next.js URL
+            policy.WithOrigins("http://localhost:30000", "http://localhost:5174", "http://localhost:5173", "http://localhost:30001")
                   .AllowAnyHeader()
                   .AllowAnyMethod();
         });
@@ -39,6 +39,11 @@ builder.Services.AddScoped<IStudentRepository, StudentRepository>();
 builder.Services.AddScoped<ISCH_ClassSectionRepository, SCH_ClassSectionRepository>();
 builder.Services.AddScoped<ISCH_ClassRepository, SCH_ClassRepository>();
 builder.Services.AddScoped<IStudentClassRepository, StudentClassRepository>();
+builder.Services.AddScoped<ISys_DetailRepository, Sys_DetailRepository>();
+builder.Services.AddScoped<ISubjectRepository, SubjectRepository>();
+// 1. Generic Repository ko register karna (Open Generics)
+
+// 2. Unit of Work ko register karna
 
 
 
@@ -51,6 +56,8 @@ builder.Services.AddScoped<TeacherEducationSevice>();
 builder.Services.AddScoped<TeacherExperienceService>();
 builder.Services.AddScoped<StudentService>();
 builder.Services.AddScoped<ISCH_ClassSectionService>();
+builder.Services.AddScoped<Sys_DetailService>();
+builder.Services.AddScoped(typeof(GenericService<>), typeof(GenericService<>));
 
 
 builder.Services.AddEndpointsApiExplorer();

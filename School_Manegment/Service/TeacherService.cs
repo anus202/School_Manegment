@@ -23,6 +23,17 @@ namespace School_Manegment.Service
             {
                 var res = string.Empty;
 
+                var getstudent = (await _unitOfWork.student.GetAllAsync()).Where(x => x.StudentId == Payload.Teacher.TeacherCode);
+                if (getstudent.Any())
+                {
+                    throw new Exception("Teacher Code Alredy Assign Student");
+                }
+
+                if(Payload.Teacher == null)
+                {
+                    throw new Exception("Add techer Details");
+                }
+
                 await _unitOfWork.teacher.AddAsync(Payload.Teacher);
                 await _unitOfWork.SaveAsync();
 
@@ -46,11 +57,12 @@ namespace School_Manegment.Service
                 }
                 if (Payload.LoginDetail != null)
                 {
-                    Payload.LoginDetail.FK_TeacherId = Payload.Teacher.Id;
-                    Payload.LoginDetail.TeacherCode = Payload.Teacher.TeacherCode;
-                    await _unitOfWork.teacherLoginDetail.AddAsync(Payload.LoginDetail);
                     if (Payload.LoginDetail.IsWebLogin)
                     {
+                        Payload.LoginDetail.FK_TeacherId = Payload.Teacher.Id;
+                    Payload.LoginDetail.TeacherCode = Payload.Teacher.TeacherCode;
+                    await _unitOfWork.teacherLoginDetail.AddAsync(Payload.LoginDetail);
+                    
                         Login LPayload = new Login
                         {
                             Email = Payload.Teacher.Email,

@@ -19,6 +19,8 @@ namespace School_Manegment.Models
         public DbSet<SCH_ClassSection> SCH_ClassSections { get; set; }
         public DbSet<SCH_Class> SCH_Classes { get; set; }
         public DbSet<StudentClass> StudentClasses { get; set; }
+        public DbSet<Sys_Detail> Sys_Details { get; set; }
+        public DbSet<Subject> Subjects { get; set; }
 
 
     }

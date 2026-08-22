@@ -1,23 +1,22 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using School_Manegment.Data.Interface;
 using School_Manegment.Models;
-using School_Manegment.Models.Teacher_Tbl;
 
 namespace School_Manegment.Data.Repository
 {
-    public class SCH_ClassSectionRepository : ISCH_ClassSectionRepository
+    public class SubjectRepository : ISubjectRepository
     {
         private readonly ApplicationDbContext _context;
 
-        public SCH_ClassSectionRepository (ApplicationDbContext context)
+        public SubjectRepository(ApplicationDbContext context)
         {
             _context = context;
         }
-        public async Task AddAsync(SCH_ClassSection classSection)
+        public async Task AddAsync(Subject subject)
         {
             try
             {
-                await _context.SCH_ClassSections.AddAsync(classSection);
+                await _context.Subjects.AddAsync(subject);
                 await _context.SaveChangesAsync();
             }
             catch (Exception ex)
@@ -31,10 +30,10 @@ namespace School_Manegment.Data.Repository
         {
             try
             {
-                var classSection = await _context.SCH_ClassSections.FindAsync(id);
+                var classSection = await _context.Subjects.FindAsync(id);
                 if (classSection != null)
                 {
-                    _context.SCH_ClassSections.Remove(classSection);
+                    _context.Subjects.Remove(classSection);
                     await _context.SaveChangesAsync();
                 }
             }
@@ -44,11 +43,11 @@ namespace School_Manegment.Data.Repository
             }
         }
 
-        public async Task<IEnumerable<SCH_ClassSection>> GetAllAsync()
+        public async Task<IEnumerable<Subject>> GetAllAsync()
         {
             try
             {
-                return await _context.SCH_ClassSections.ToListAsync();
+                return await _context.Subjects.ToListAsync();
             }
             catch (Exception ex)
             {
@@ -56,11 +55,11 @@ namespace School_Manegment.Data.Repository
             }
         }
 
-        public async Task<SCH_ClassSection> GetByIdAsync(int id)
+        public async Task<Subject> GetByIdAsync(int id)
         {
             try
             {
-                return await _context.SCH_ClassSections.FirstOrDefaultAsync(cs => cs.Id == id).ConfigureAwait(false);
+                return await _context.Subjects.FirstOrDefaultAsync(c => c.Id == id).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -68,11 +67,11 @@ namespace School_Manegment.Data.Repository
             }
         }
 
-        public async Task UpdateAsync(SCH_ClassSection classSection)
+        public async Task UpdateAsync(Subject subjects)
         {
             try
             {
-                _context.SCH_ClassSections.Update(classSection);
+                _context.Subjects.Update(subjects);
                 await _context.SaveChangesAsync();
             }
             catch (Exception ex)
@@ -80,8 +79,5 @@ namespace School_Manegment.Data.Repository
                 throw ex;
             }
         }
-
-        // Repository ke andar
-      
     }
 }

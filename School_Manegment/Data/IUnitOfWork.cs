@@ -14,6 +14,10 @@ namespace School_Manegment.Data
         ISCH_ClassSectionRepository classSection { get; }
         ISCH_ClassRepository sCH_class { get; }
         IStudentClassRepository studentClass { get; }
+        ISys_DetailRepository sysDetail { get; }
+        ISubjectRepository subject { get; }
+
+
         Task SaveAsync();
     }
 }

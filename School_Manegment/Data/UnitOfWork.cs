@@ -16,6 +16,8 @@ namespace School_Manegment.Data
         public ISCH_ClassSectionRepository classSection { get; }
         public ISCH_ClassRepository sCH_class { get; }
         public IStudentClassRepository studentClass { get; }
+        public ISys_DetailRepository sysDetail { get; }
+        public ISubjectRepository subject { get; }
 
 
 
@@ -29,7 +31,10 @@ namespace School_Manegment.Data
             IStudentRepository studentRepository,
             ISCH_ClassSectionRepository classSectionRepository,
             ISCH_ClassRepository sCH_classRepository,
-            IStudentClassRepository studentClassRepository
+            IStudentClassRepository studentClassRepository,
+            ISys_DetailRepository sysDetailRepository,
+            ISubjectRepository subjectRepository
+
             )
         {
             _context = context;
@@ -42,6 +47,8 @@ namespace School_Manegment.Data
             classSection = classSectionRepository;
             sCH_class = sCH_classRepository;
             studentClass = studentClassRepository;
+            sysDetail = sysDetailRepository;
+            subject = subjectRepository;
         }
 
         public async Task SaveAsync()
