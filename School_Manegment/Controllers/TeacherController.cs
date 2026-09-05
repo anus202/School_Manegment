@@ -18,21 +18,19 @@ namespace School_Manegment.Controllers
         }
         [HttpGet("GetAll")]
 
-       public async Task<JsonResult> GetAll()
+       public async Task<JsonResult> GetAll()              
         {
-            var teachers = await _service.GetAllAsync();
+            var teachers = await _service.GetAllAsync();   
             if (teachers == null)
             {
                 return Json(new
                 {
-                    Success = true,
-                    data = teachers
+                    Success = true, data = teachers
                 });
             }
             return Json(new
             {
-                Success = false,
-                data = teachers
+                Success = false,data = teachers
             });
         }
 
@@ -44,14 +42,12 @@ namespace School_Manegment.Controllers
             {
                 return Json(new
                 {
-                    Success = false,
-                    data = res
+                    Success = false,data = res
                 });
             }
             return Json(new
             {
-                Success = true,
-                data = res
+                Success = true, data = res
             });
         }
 
@@ -63,14 +59,62 @@ namespace School_Manegment.Controllers
             {
                 return Json(new
                 {
-                    Success = false,
-                    data = teacher
+                    Success = false, data = teacher
                 });
             }
             return Json(new
             {
-                Success = true,
-                data = teacher
+                Success = true,data = teacher
+            });
+        }
+
+        [HttpDelete("softDelete/{id}")]
+        public async Task<JsonResult> SoftDelete(int id)
+        {
+            var teacher =  _service.DeleteAsync(id);
+            if (teacher == null)
+            {
+                return Json(new
+                {
+                    Success = false,data = teacher
+                });
+            }
+            return Json(new
+            {
+                Success = true, data = teacher
+            });
+        }
+        [HttpPut("restore/{id}")]
+        public async Task<JsonResult> Restore(int id)
+        {
+            var teacher = await _service.GetByIdAsyncAllTbl(id);
+            if (teacher == null)
+            {
+                return Json(new
+                {
+                    Success = false,data = teacher
+                });
+            }
+            return Json(new
+            {
+                Success = true, data = teacher
+            });
+        }
+
+        [HttpPost("assignSubject")]
+        public async Task<JsonResult> AssignSubject(int teacherId , string Subject)
+        {
+            var teacher = await _service.GetAllAsync();
+            if (teacher == null)
+            {
+                return Json(new
+                {
+                    Success = false,data = teacher
+                });
+            }
+            return Json(new
+            {
+                Success = true, data = teacher
             });
         }
 

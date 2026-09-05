@@ -69,13 +69,26 @@ namespace School_Manegment.Service
         }
 
 
-        public async Task<IEnumerable<Student>> GetAllAsync()
+        public async Task<IEnumerable<object>> GetAllAsync()
         {
             try
             {
-                var getData = await _unitOfWork.student.GetAllAsync();
+                var getStudent = await _unitOfWork.student.GetAllAsync();
+                var getClass = await _unitOfWork.studentClass.GetAllAsync();
+                var result = from std in getStudent
+                             join cls in getClass on
+                             std.Id equals cls.FK_StudentId
+                             select new
+                             {
+                                 cls.StudentCode,
+                                 Fullname = std.FirstName + " " + std.FatherName,
+                                 std.WhatappNumber,
+                                 std.PrentNumber,
+                                 cls.Class,
+                                 cls.Section,
+                             };
+                return result;
 
-                return getData;
             }
             catch (Exception)
             {

@@ -6,8 +6,9 @@ using static School_Manegment.Payload.ApplicationDTO;
 
 namespace School_Manegment.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
+    //{
+    //    [ApiController]
+    //    [Route("api/[controller]")]
     public class MasterController : Controller
     {
         private readonly Sys_DetailService _service;

@@ -18,22 +18,31 @@ namespace School_Manegment.Controllers
             _service = service;
         }
 
+        public IActionResult StudentList()
+        {
+            return View();
+        }
+
+        public IActionResult StudentForm()
+        {
+            return View();
+        }
         [HttpGet("GetAll")]
         public async Task<JsonResult> GetAll()
         {
-            var students = await _service.GetAllAsync();
-            if (students == null)
+            var res = await _service.GetAllAsync();
+            if (res == null)
             {
                 return Json(new
                 {
                     Success = "No Students Found",
-                    data = students
+                    data = res
                 });
             }
             return Json(new
             {
                 Success = "Students Retrieved Successfully",
-                data = students
+                data = res
             });
         }
         [AllowAnonymous]

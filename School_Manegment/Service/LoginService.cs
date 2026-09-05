@@ -63,6 +63,19 @@ namespace School_Manegment.Service
                 throw;
             }
         }
+        public async Task<IEnumerable<Login>> ForgetPass(string email)
+        {
+            try
+            {
+                var getData = await _unitOfWork.login.GetAllAsync();
+
+                return getData;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
 
         public async Task<Login> GetByIdAsync(int id)
         {
@@ -92,7 +105,7 @@ namespace School_Manegment.Service
             }
         }
 
-        public async Task<LoginResponseDto?> AuthenticateAsync(Login login)
+        public async Task<LoginResponseDto?> AuthenticateAsync(LoginRequest login)
         {
             var logins = await _unitOfWork.login.GetAllAsync();
 

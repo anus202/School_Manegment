@@ -9,12 +9,10 @@ namespace School_Manegment.Service
     public class TeacherService
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly JwtService _jwtService;
 
-        public TeacherService(IUnitOfWork unitOfWork, JwtService jwtService = null)
+        public TeacherService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
-            _jwtService = jwtService;
         }
 
         public async Task<string> AddAsync(TeacherDetailsDto Payload)

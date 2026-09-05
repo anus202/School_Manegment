@@ -35,16 +35,16 @@ namespace Hotel_Manegment.Services
             {
                 var classes = new List<SCH_Class>
                 {
-                    new SCH_Class { ClassName = "Class 1" },
-                    new SCH_Class { ClassName = "Class 2" },
-                    new SCH_Class { ClassName = "Class 3" },
-                    new SCH_Class { ClassName = "Class 4" },
-                    new SCH_Class { ClassName = "Class 5" },
-                    new SCH_Class { ClassName = "Class 6" },
-                    new SCH_Class { ClassName = "Class 7" },
-                    new SCH_Class { ClassName = "Class 8" },
-                    new SCH_Class { ClassName = "Class 9" },
-                    new SCH_Class { ClassName = "Class 10" }
+                    new SCH_Class { ClassName = "1" },
+                    new SCH_Class { ClassName = "2" },
+                    new SCH_Class { ClassName = "3" },
+                    new SCH_Class { ClassName = "4" },
+                    new SCH_Class { ClassName = "5" },
+                    new SCH_Class { ClassName = "6" },
+                    new SCH_Class { ClassName = "7" },
+                    new SCH_Class { ClassName = "8" },
+                    new SCH_Class { ClassName = "9" },
+                    new SCH_Class { ClassName = "10" }
                 };
 
                 await _context.SCH_Classes.AddRangeAsync(classes);
