@@ -18,15 +18,7 @@ namespace School_Manegment.Controllers
             _service = service;
         }
 
-        public IActionResult StudentList()
-        {
-            return View();
-        }
 
-        public IActionResult StudentForm()
-        {
-            return View();
-        }
         [HttpGet("GetAll")]
         public async Task<JsonResult> GetAll()
         {

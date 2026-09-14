@@ -12,9 +12,7 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// =========================
-// CORS
-// =========================
+// CORS Add yaha Hongy 
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontend",
@@ -30,22 +28,13 @@ builder.Services.AddCors(options =>
         });
 });
 
-// =========================
-// MVC + WEB API
-// =========================
-builder.Services.AddControllersWithViews();
 
-// =========================
-// DATABASE
-// =========================
+builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(
         builder.Configuration.GetConnectionString("Conn")
     ));
 
-// =========================
-// REPOSITORIES
-// =========================
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<ILoginRepository, LoginRepository>();
 builder.Services.AddScoped<ITeacherRepository, TeacherRepository>();
@@ -59,9 +48,6 @@ builder.Services.AddScoped<IStudentClassRepository, StudentClassRepository>();
 builder.Services.AddScoped<ISys_DetailRepository, Sys_DetailRepository>();
 builder.Services.AddScoped<ISubjectRepository, SubjectRepository>();
 
-// =========================
-// SERVICES
-// =========================
 builder.Services.AddScoped<LoginService>();
 builder.Services.AddScoped<SetupService>();
 builder.Services.AddScoped<JwtService>();
@@ -74,9 +60,6 @@ builder.Services.AddScoped<ISCH_ClassSectionService>();
 builder.Services.AddScoped<Sys_DetailService>();
 builder.Services.AddScoped(typeof(GenericService<>), typeof(GenericService<>));
 
-// =========================
-// SWAGGER
-// =========================
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerGen(options =>
@@ -107,9 +90,6 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
-// =========================
-// JWT AUTHENTICATION
-// =========================
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme =
@@ -165,14 +145,8 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
-// =========================
-// BUILD APP
-// =========================
 var app = builder.Build();
 
-// =========================
-// DATABASE MIGRATION
-// =========================
 using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider
@@ -186,9 +160,6 @@ using (var scope = app.Services.CreateScope())
     await setupService.AddLogin();
 }
 
-// =========================
-// SWAGGER
-// =========================
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -206,14 +177,11 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-// =========================
-// MIDDLEWARE
-// =========================
 app.UseCors("AllowFrontend");
 
 app.UseHttpsRedirection();
 
-app.UseStaticFiles();
+//app./*UseStaticFiles*/();
 
 app.UseRouting();
 
@@ -221,16 +189,10 @@ app.UseAuthentication();
 
 app.UseAuthorization();
 
-// =========================
-// MVC ROUTING
-// =========================
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Login}/{action=LoginForm}/{id?}");
+//app.MapControllerRoute(
+//    name: "default",
+//    pattern: "{controller=Login}/{action=LoginForm}/{id?}");
 
-// =========================
-// API ROUTING
-// =========================
 app.MapControllers();
 
 app.Run();
