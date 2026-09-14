@@ -6,6 +6,7 @@ using static School_Manegment.Payload.ApplicationDTO;
 
 namespace School_Manegment.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class LoginController : Controller
@@ -17,18 +18,12 @@ namespace School_Manegment.Controllers
             _service = service;
         }
 
-        // Login page
         [HttpGet("/Login/LoginForm")]
         public IActionResult LoginForm()
         {
             return View();
         }
 
-
-        // =========================
-        // LOGIN / AUTHORIZE
-        // POST: /api/Login/Autrize
-        // =========================
         [AllowAnonymous]
         [HttpPost("Autrize")]
         public async Task<IActionResult> Autrize(
@@ -55,10 +50,6 @@ namespace School_Manegment.Controllers
         }
 
 
-        // =========================
-        // CREATE USER
-        // POST: /api/Login/CreateUser
-        // =========================
         [HttpPost("CreateUser")]
         public async Task<IActionResult> AddAsync(
             [FromBody] Login login)
@@ -83,11 +74,6 @@ namespace School_Manegment.Controllers
             }
         }
 
-
-        // =========================
-        // FORGET PASSWORD
-        // GET: /api/Login/ForgetPass?email=...
-        // =========================
         [HttpGet("ForgetPass")]
         public async Task<IActionResult> ForgetPass(string email)
         {
@@ -112,10 +98,6 @@ namespace School_Manegment.Controllers
         }
 
 
-        // =========================
-        // LOGOUT
-        // POST: /api/Login/Logout
-        // =========================
         [HttpPost("Logout")]
         public async Task<IActionResult> Logout(string email)
         {
@@ -140,10 +122,7 @@ namespace School_Manegment.Controllers
         }
 
 
-        // =========================
-        // INACTIVE USER
-        // PUT: /api/Login/InactiveUser/5
-        // =========================
+
         [HttpPut("InactiveUser/{id}")]
         public async Task<IActionResult> Delete(int id)
         {
@@ -168,10 +147,6 @@ namespace School_Manegment.Controllers
         }
 
 
-        // =========================
-        // ACTIVE USER
-        // PUT: /api/Login/ActiveUser/5
-        // =========================
         [HttpPut("ActiveUser/{id}")]
         public async Task<IActionResult> ActiveUser(int id)
         {

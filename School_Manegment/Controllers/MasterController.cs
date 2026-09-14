@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using School_Manegment.Models;
 using School_Manegment.Models.Student_tbl;
 using School_Manegment.Service;
@@ -6,9 +7,9 @@ using static School_Manegment.Payload.ApplicationDTO;
 
 namespace School_Manegment.Controllers
 {
-    //{
-    //    [ApiController]
-    //    [Route("api/[controller]")]
+    [Authorize]
+    [Route("api/[controller]")]
+    [ApiController]
     public class MasterController : Controller
     {
         private readonly Sys_DetailService _service;

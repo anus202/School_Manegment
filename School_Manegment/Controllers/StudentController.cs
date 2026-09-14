@@ -7,8 +7,9 @@ using static School_Manegment.Payload.ApplicationDTO;
 
 namespace School_Manegment.Controllers
 {
-    [ApiController]
+    [Authorize]
     [Route("api/[controller]")]
+    [ApiController]
     public class StudentController : Controller
     {
         private readonly StudentService _service;
